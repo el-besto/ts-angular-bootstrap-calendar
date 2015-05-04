@@ -1,6 +1,6 @@
 /**
  * ts-angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day. Modified for use by Teachscape.
- * @version v0.9.2
+ * @version v0.1.1
  * @link https://github.com/el-besto/ts-angular-bootstrap-calendar
  * @license MIT
  */
