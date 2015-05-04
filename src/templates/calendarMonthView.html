@@ -1,0 +1,50 @@
+<div class="cal-row-fluid cal-row-head">
+
+  <div class="cal-cell1" 
+       ng-repeat="day in vm.weekDays track by $index">
+    {{ day }}</div>
+  
+  <hr class="calendar-grid-heading-stripe">
+</div>
+<div class="cal-month-box">
+
+  <div ng-repeat="rowOffset in vm.monthOffsets track by rowOffset">
+    <div class="cal-row-fluid cal-before-eventlist">
+      <div
+        ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index"
+        class="cal-cell1 cal-cell {{ day.highlightClass }}"
+        ng-click="vm.dayClicked(day)"
+        ng-class="{pointer: day.events.length > 0}">
+
+        <div ng-include="'src/templates/calendarMonthDay.html'"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <hr class="cal-month-box-divider"> -->
+
+</div>
+
+  <!-- CUSTOMIZATION: 
+    1. moved calendar-slide-box outside of ng-repeat.
+    2. set is-open = 'true', from vm.openRowIndex === $index
+    3. add cal-month-box-divider
+  -->
+<!-- TODO: write a function to give us all events that are scheduled to replace: vm.openEvents function for calendar-slide-box -->
+  
+  
+  <mwl-calendar-slide-box
+    class="cal-month-box-event-list"
+    is-open="true"
+    events="vm.openEvents"
+    unscheduled-events="unscheduledEvents"
+    on-event-click="onEventClick"
+    edit-event-html="editEventHtml"
+    on-edit-event-click="onEditEventClick"
+    delete-event-html="deleteEventHtml"
+    on-delete-event-click="onDeleteEventClick">
+  </mwl-calendar-slide-box>
+  </div>
+
+</div>
