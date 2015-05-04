@@ -6,6 +6,10 @@ var runSequence = require('run-sequence');
 var bowerFiles = require('main-bower-files');
 var series = require('stream-series');
 
+// TEACHSCAPE
+var product = 'reflect';
+var productUrl = '../reflect/dist/ts-angular-bootstrap-calendar/';
+
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
   gulp.start('test:watch');
@@ -59,7 +63,8 @@ gulp.task('css', function() {
     .pipe($.rename('ts-angular-bootstrap-calendar.min.css'))
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('dist/css'))
+    .pipe(gulp.dest(productUrl+'/css'));
 
 });
 
@@ -102,11 +107,13 @@ function buildJS(withTemplates) {
     .pipe($.wrapJs('(function(window, angular) {\n%= body %\n }) (window, angular);'))
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest(productUrl+'/js'))
     .pipe($.uglify())
     .pipe($.rename(minFilename))
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest(productUrl+'/js'));
 }
 
 gulp.task('js-tpls', function() {
