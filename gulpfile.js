@@ -7,7 +7,7 @@ var bowerFiles = require('main-bower-files');
 var series = require('stream-series');
 
 // TEACHSCAPE
-var localReflect = ('../reflect/angular-bootstrap-calendar/');
+var localReflect = ('../reflect/ts-angular-bootstrap-calendar/');
 
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
