@@ -5,11 +5,9 @@ var open = require('open');
 var runSequence = require('run-sequence');
 var bowerFiles = require('main-bower-files');
 var series = require('stream-series');
-var localReflect = ('../reflect/angular-bootstrap-calendar/');
 
 // TEACHSCAPE
-var product = 'reflect';
-var productUrl = '../reflect/dist/ts-angular-bootstrap-calendar/';
+var localReflect = ('../reflect/angular-bootstrap-calendar/');
 
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
