@@ -5,6 +5,7 @@ var open = require('open');
 var runSequence = require('run-sequence');
 var bowerFiles = require('main-bower-files');
 var series = require('stream-series');
+var localReflect = ('../reflect/angular-bootstrap-calendar/');
 
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
@@ -55,11 +56,13 @@ gulp.task('css', function() {
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe($.rename('ts-angular-bootstrap-calendar.css'))
     .pipe(gulp.dest('dist/css'))
+    .pipe(gulp.dest(localReflect+'css'))
     .pipe($.minifyCss())
     .pipe($.rename('ts-angular-bootstrap-calendar.min.css'))
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('dist/css'))
+    .pipe(gulp.dest(localReflect+'css'));
 
 });
 
@@ -102,6 +105,7 @@ function buildJS(withTemplates) {
     .pipe($.wrapJs('(function(window, angular) {\n%= body %\n }) (window, angular);'))
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest(localReflect+'js'))
     .pipe($.uglify())
     .pipe($.rename(minFilename))
     .pipe($.header(banner, { pkg : pkg } ))
