@@ -820,7 +820,8 @@
                 '$log',
                 'reflectServices',
                 'practitionerPageServices',
-                function ($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices) {
+                'calendarServices',
+                function ($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
                     var vm = this;
                     var firstRun = true;
                     $scope.$on('calendar.refreshView', function () {
@@ -846,6 +847,7 @@
                             $scope.onTimespanClick({ calendarDate: day.date.toDate() });
                         }
                         vm.view.forEach(function (monthDay) {
+                            // customization
                             monthDay.isOpened = false;
                         });
                         vm.openEvents = day.events;
