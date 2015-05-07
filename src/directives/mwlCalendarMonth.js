@@ -12,15 +12,15 @@ angular
         events: '=',
         unscheduledEvents: '=',
         currentDay: '=',
-        onEventClick: '=',
-        onEditEventClick: '=',
-        onDeleteEventClick: '=',
+        onEventClick: '&',
+        onEditEventClick: '&',
+        onDeleteEventClick: '&',
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
         onTimespanClick: '='
       },
-      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices) {
+      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
 
         var vm = this;
         var firstRun = true;
@@ -55,6 +55,7 @@ angular
           }
 
           vm.view.forEach(function(monthDay) {
+            // customization
             monthDay.isOpened = false;
           });
           vm.openEvents = day.events;

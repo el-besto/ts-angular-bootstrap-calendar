@@ -11,7 +11,7 @@
         <!-- START event list -->
         <div class="row">
           <!-- START scheduled event list -->
-          <div class="col-xs-12" ng-repeat="event in events track by $index | orderBy: 'calendarDate'">
+          <div class="col-xs-12" ng-repeat="event in events track by $index | orderBy:'event.partParameters.startTime':true">
               <!-- START single event -->
               <div class="row">
                   <div class="col-xs-2">

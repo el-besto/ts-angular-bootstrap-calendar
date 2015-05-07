@@ -34,9 +34,9 @@ angular
         events: '=',
         currentDay: '=',
         unscheduledEvents: '=',
-        onEventClick: '=',
+        onEventClick: '&',
         editEventHtml: '=',
-        onEditEventClick: '=',
+        onEditEventClick: '&',
         deleteEventHtml: '=',
         onDeleteEventClick: '='
       }
