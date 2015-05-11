@@ -2,12 +2,14 @@
 
   <div class="cal-cell1" 
        ng-repeat="day in vm.weekDays track by $index">
-    {{ day }}</div>
+      {{ day }}
+  </div>
   
   <hr class="calendar-grid-heading-stripe">
 </div>
-<div class="cal-month-box">
 
+
+<div class="cal-month-box">
   <div ng-repeat="rowOffset in vm.monthOffsets track by rowOffset">
     <div class="cal-row-fluid cal-before-eventlist">
       <div
@@ -19,11 +21,7 @@
         <div ng-include="'src/templates/calendarMonthDay.html'"></div>
       </div>
     </div>
-
   </div>
-
-  <!-- <hr class="cal-month-box-divider"> -->
-
 </div>
 
   <!-- CUSTOMIZATION: 
@@ -38,13 +36,10 @@
     class="cal-month-box-event-list"
     is-open="true"
     events="vm.openEvents"
-    unscheduled-events="unscheduledEvents"
+    unscheduled-events="$parent.unscheduledEvents"
     on-event-click="onEventClick"
     edit-event-html="editEventHtml"
     on-edit-event-click="onEditEventClick"
     delete-event-html="deleteEventHtml"
     on-delete-event-click="onDeleteEventClick">
   </mwl-calendar-slide-box>
-  </div>
-
-</div>

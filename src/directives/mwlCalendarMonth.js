@@ -12,18 +12,22 @@ angular
         events: '=',
         unscheduledEvents: '=',
         currentDay: '=',
-        onEventClick: '&',
-        onEditEventClick: '&',
-        onDeleteEventClick: '&',
+        onEventClick: '=',
+        onEditEventClick: '=',
+        onDeleteEventClick: '=',
         editEventHtml: '=',
         deleteEventHtml: '=',
         autoOpen: '=',
         onTimespanClick: '='
       },
-      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
+      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices) {
 
         var vm = this;
         var firstRun = true;
+///////// CUSTOMIZATION
+        var pps = practitionerPageServices;
+        $scope.icons= pps.icons;
+        $scope.prettyName = pps.prettyName;
 
         
 
@@ -55,7 +59,6 @@ angular
           }
 
           vm.view.forEach(function(monthDay) {
-            // customization
             monthDay.isOpened = false;
           });
           vm.openEvents = day.events;

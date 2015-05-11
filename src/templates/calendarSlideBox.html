@@ -8,29 +8,28 @@
             </em></h4>
         </div>
 
-        <!-- START event list -->
         <div class="row">
-          <!-- START scheduled event list -->
-          <div class="col-xs-12" ng-repeat="event in events track by $index | orderBy:'event.partParameters.startTime':true">
-              <!-- START single event -->
+          <div class="col-xs-12" 
+               ng-repeat="(event, assessmentPartId) in events">
               <div class="row">
                   <div class="col-xs-2">
                       <span class="scheduled-tasks-date ts-burgundy">
-                        {{calendarDate}}
                         <span ng-if="$first">TODAY</span>
+                        <span ng-if="$first">{{calendarDate}}</span>
+                        <span ng-if="!$first">{{calendarDate}}</span>               
                       </span>
                       <br>
                       <span class="scheduled-tasks-date ts-burgundy">
-                        {{event.partParameters.startTime | date: 'EEEE'}}
+                        {{moment(event.partParameters.startTime). | date: 'EEEE'}}
                       </span>
                       <br>
                       <span class="scheduled-tasks-date ts-burgundy">
-                        {{event.partParameters.startTime | date: 'MMM. dd' }}
+                        {{moment(event.partParameters.startTime). | date: 'MMM. dd' }}
                       </span>
                   </div>
                   <div class="col-xs-2">
                       <span class="scheduled-tasks-time gray-light">
-                        {{event.partParameters.startTime | date: 'h:mm a'}}
+                        {{moment(event.partParameters.startTime). | date: 'h:mm a'}}
                       </span>
                   </div>
                   <div class="col-xs-6 event-list-primary-details">
@@ -79,7 +78,7 @@
               <hr class="event-list-separator" ng-if="!$last">  
               <!-- END single event -->
           </div>
-          <!-- END scheduled event list -->
+<!-- END scheduled event list -->
 
     </ul>
 

@@ -27,7 +27,7 @@ angular
           dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
           dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
           vm.dayViewSplit = parseInt($scope.dayViewSplit);
-          vm.dayHeight = (40 / $scope.dayViewSplit) * 20;
+          vm.dayHeight = (60 / $scope.dayViewSplit) * 30;
           vm.days = [];
           var dayCounter = moment(dayViewStart);
           for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
