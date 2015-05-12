@@ -6,7 +6,7 @@
  */
 (function (window, angular) {
     'use strict';
-    angular.module('mwl.calendar', ['reflect']);
+    angular.module('mwl.calendar', []);
     angular.module('mwl.calendar').run([
         '$templateCache',
         function ($templateCache) {

@@ -7,7 +7,7 @@ var bowerFiles = require('main-bower-files');
 var series = require('stream-series');
 
 // TEACHSCAPE
-var localReflect = ('../reflect/ts-angular-bootstrap-calendar/');
+// var localReflect = ('../reflect/ts-angular-bootstrap-calendar/');
 
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
@@ -57,7 +57,6 @@ gulp.task('css', function() {
     .pipe($.less())
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe($.rename('ts-angular-bootstrap-calendar.css'))
-    .pipe(gulp.dest(localReflect+'dist/css'))
     .pipe(gulp.dest('dist/css'))
     .pipe($.minifyCss())
     .pipe($.rename('ts-angular-bootstrap-calendar.min.css'))
@@ -106,7 +105,6 @@ function buildJS(withTemplates) {
     .pipe($.wrapJs('(function(window, angular) {\n%= body %\n }) (window, angular);'))
     .pipe($.header(banner, { pkg : pkg } ))
     .pipe(gulp.dest('dist/js'))
-    .pipe(gulp.dest(localReflect+'dist/js'))
     .pipe($.uglify())
     .pipe($.rename(minFilename))
     .pipe($.header(banner, { pkg : pkg } ))

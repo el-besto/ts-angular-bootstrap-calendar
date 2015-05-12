@@ -6,7 +6,7 @@
  */
 (function (window, angular) {
     'use strict';
-    angular.module('mwl.calendar', ['reflect']);
+    angular.module('mwl.calendar', []);
     'use strict';
     angular.module('mwl.calendar').constant('moment', window.moment);
     'use strict';
