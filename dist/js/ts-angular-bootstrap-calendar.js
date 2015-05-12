@@ -6,7 +6,7 @@
  */
 (function (window, angular) {
     'use strict';
-    angular.module('mwl.calendar', ['reflect']);
+    angular.module('mwl.calendar', []);
     'use strict';
     angular.module('mwl.calendar').constant('moment', window.moment);
     'use strict';
@@ -44,14 +44,6 @@
         'practitionerPageServices',
         function (moment, calendarConfig, reflectServices, calendarServices, practitionerPageServices) {
             // CUSTOMIZATION: Toggle events on calendar between 'all' and 'my'.
-            //  this provides the switch between all events or just those that
-            //  match actorId of the currentUser
-            // function toggleDisplayedEvents(eventsDisplayed) {
-            //   if (eventsDisplayed === 'all') {
-            //     return 'my';
-            //   }
-            //   return 'all';
-            // }
             function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
                 eventStart = moment(eventStart);
                 eventEnd = moment(eventEnd);
@@ -63,7 +55,7 @@
                 var startPeriod = moment(calendarDate).startOf(period);
                 var endPeriod = moment(calendarDate).endOf(period);
                 return allEvents.filter(function (event) {
-                    return eventIsInPeriod(event.partParameters.startTime, event.endsAt, startPeriod, endPeriod);
+                    return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
                 });
             }
             function getBadgeTotal(events) {
@@ -88,7 +80,7 @@
                     var startPeriod = month.clone();
                     var endPeriod = startPeriod.clone().endOf('month');
                     var periodEvents = eventsInPeriod.filter(function (event) {
-                        return eventIsInPeriod(event.partParameters.startTime, event.endsAt, startPeriod, endPeriod);
+                        return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
                     });
                     view.push({
                         label: startPeriod.format(calendarConfig.dateFormats.month),
@@ -114,7 +106,7 @@
                     var monthEvents = [];
                     if (inMonth) {
                         monthEvents = eventsInPeriod.filter(function (event) {
-                            return eventIsInPeriod(event.partParameters.startTime, event.endsAt, day, day.clone().endOf('day'));
+                            return eventIsInPeriod(event.startsAt, event.endsAt, day, day.clone().endOf('day'));
                         });
                     }
                     view.push({
@@ -157,9 +149,9 @@
                     dayCounter.add(1, 'day');
                 }
                 var eventsSorted = events.filter(function (event) {
-                    return eventIsInPeriod(event.partParameters.startTime, event.endsAt, startOfWeek, endOfWeek);
+                    return eventIsInPeriod(event.startsAt, event.endsAt, startOfWeek, endOfWeek);
                 }).map(function (event) {
-                    var eventStart = moment(event.partParameters.startTime).startOf('day');
+                    var eventStart = moment(event.startsAt).startOf('day');
                     var eventEnd = moment(event.endsAt).startOf('day');
                     var weekViewStart = moment(startOfWeek).startOf('day');
                     var weekViewEnd = moment(endOfWeek).startOf('day');
@@ -193,18 +185,18 @@
                 var dayHeightMultiplier = dayHeight / 60;
                 var buckets = [];
                 return eventsInPeriod.filter(function (event) {
-                    return eventIsInPeriod(event.partParameters.startTime, event.endsAt, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
+                    return eventIsInPeriod(event.startsAt, event.endsAt, moment(currentDay).startOf('day').toDate(), moment(currentDay).endOf('day').toDate());
                 }).map(function (event) {
-                    if (moment(event.partParameters.startTime).isBefore(calendarStart)) {
+                    if (moment(event.startsAt).isBefore(calendarStart)) {
                         event.top = 0;
                     } else {
-                        event.top = moment(event.partParameters.startTime).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * dayHeightMultiplier - 2;
+                        event.top = moment(event.startsAt).startOf('minute').diff(calendarStart.startOf('minute'), 'minutes') * dayHeightMultiplier - 2;
                     }
                     if (moment(event.endsAt).isAfter(calendarEnd)) {
                         event.height = calendarHeight - event.top;
                     } else {
-                        var diffStart = event.partParameters.startTime;
-                        if (moment(event.partParameters.startTime).isBefore(calendarStart)) {
+                        var diffStart = event.startsAt;
+                        if (moment(event.startsAt).isBefore(calendarStart)) {
                             diffStart = calendarStart.toDate();
                         }
                         event.height = moment(event.endsAt).diff(diffStart, 'minutes') * dayHeightMultiplier;
@@ -221,7 +213,7 @@
                     buckets.forEach(function (bucket, bucketIndex) {
                         var canFitInThisBucket = true;
                         bucket.forEach(function (bucketItem) {
-                            if (eventIsInPeriod(event.partParameters.startTime, event.endsAt, bucketItem.partParameters.startTime, bucketItem.endsAt) || eventIsInPeriod(bucketItem.partParameters.startTime, bucketItem.endsAt, event.partParameters.startTime, event.endsAt)) {
+                            if (eventIsInPeriod(event.startsAt, event.endsAt, bucketItem.partParameters.startTime, bucketItem.endsAt) || eventIsInPeriod(bucketItem.partParameters.startTime, bucketItem.endsAt, event.startsAt, event.endsAt)) {
                                 canFitInThisBucket = false;
                             }
                         });
@@ -487,7 +479,8 @@
             day: 'D MMM',
             month: 'MMMM',
             // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
-            weekDay: 'dd'    // weekDay: 'dddd'
+            // weekDay: 'ddd'
+            weekDay: 'dddd'
         };
         var defaultTitleFormats = {
             day: 'dddd D MMMM, YYYY',
@@ -720,7 +713,12 @@
             controller: [
                 '$scope',
                 '$sce',
-                function ($scope, $sce) {
+                'practitionerPageServices',
+                'calendarServices',
+                function ($scope, $sce, practitionerPageServices, calendarServices) {
+                    // customization
+                    var pps = practitionerPageServices;
+                    var cs = calendarServices;
                     var vm = this;
                     vm.$sce = $sce;
                     var unbindWatcher = $scope.$watch('isOpen', function (isOpen) {
@@ -815,9 +813,14 @@
                 '$log',
                 'reflectServices',
                 'practitionerPageServices',
-                function ($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices) {
+                'calendarServices',
+                function ($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
                     var vm = this;
                     var firstRun = true;
+                    ///////// CUSTOMIZATION
+                    var pps = practitionerPageServices;
+                    $scope.icons = pps.icons;
+                    $scope.prettyName = pps.prettyName;
                     $scope.$on('calendar.refreshView', function () {
                         vm.weekDays = calendarHelper.getWeekDayNames();
                         vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
@@ -953,12 +956,11 @@
                     var vm = this;
                     // CUSTOMIZATION: adding a day change function to the controller
                     vm.changeDate = function (date) {
-                        console.log('clicked day = ', moment(date).toDate());
-                        console.log('currentDay before click = ', $scope.currentDay);
+                        // console.log("clicked day = ", moment(date).toDate());
+                        // console.log("currentDay before click = ", $scope.currentDay);
                         $scope.currentDay = moment(date).toDate();
                         console.log('currentDay after click = ', $scope.currentDay);
-                        $scope.listDate = moment(date).toDate();
-                        console.log('listDate is another variable that is set... just in case it messes anything up... = ', $scope.listDate);
+                        $scope.listDate = moment(date).toDate();    // console.log("listDate is another variable that is set... just in case it messes anything up... = ", $scope.listDate);
                     };
                     vm.changeView = function (view, newDay) {
                         $scope.view = view;
