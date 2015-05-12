@@ -493,7 +493,8 @@
             day: 'D MMM',
             month: 'MMMM',
             // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
-            weekDay: 'ddd'    // weekDay: 'dddd'
+            // weekDay: 'ddd'
+            weekDay: 'dddd'
         };
         var defaultTitleFormats = {
             day: 'dddd D MMMM, YYYY',
@@ -914,7 +915,7 @@
                         dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
                         dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
                         vm.dayViewSplit = parseInt($scope.dayViewSplit);
-                        vm.dayHeight = 10 / $scope.dayViewSplit * 5;
+                        vm.dayHeight = 60 / $scope.dayViewSplit * 30;
                         vm.days = [];
                         var dayCounter = moment(dayViewStart);
                         for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
