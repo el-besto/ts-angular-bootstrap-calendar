@@ -494,7 +494,7 @@
             month: 'MMMM',
             // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
             // weekDay: 'ddd'
-            weekDay: 'dddd'
+            weekDay: 'ddd'
         };
         var defaultTitleFormats = {
             day: 'dddd D MMMM, YYYY',
