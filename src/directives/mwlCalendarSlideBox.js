@@ -11,7 +11,7 @@ angular
       controller: function($scope, $sce, practitionerPageServices, calendarServices) {
 // customization
         var pps = practitionerPageServices;
-        
+        var cs = calendarServices;
         var vm = this;
         vm.$sce = $sce;
 

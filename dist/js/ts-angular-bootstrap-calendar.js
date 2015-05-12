@@ -43,8 +43,9 @@
         'calendarServices',
         'practitionerPageServices',
         function (moment, calendarConfig, reflectServices, calendarServices, practitionerPageServices) {
+            // CUSTOMIZATION: Toggle events on calendar between 'all' and 'my'.
             function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
-                eventStart = moment(event.partParameters.startTime);
+                eventStart = moment(eventStart);
                 eventEnd = moment(eventEnd);
                 periodStart = moment(periodStart);
                 periodEnd = moment(periodEnd);
@@ -212,7 +213,7 @@
                     buckets.forEach(function (bucket, bucketIndex) {
                         var canFitInThisBucket = true;
                         bucket.forEach(function (bucketItem) {
-                            if (eventIsInPeriod(event.startsAt, event.endsAt, bucketItem.startsAt, bucketItem.endsAt) || eventIsInPeriod(bucketItem.startsAt, bucketItem.endsAt, event.startsAt, event.endsAt)) {
+                            if (eventIsInPeriod(event.startsAt, event.endsAt, bucketItem.partParameters.startTime, bucketItem.endsAt) || eventIsInPeriod(bucketItem.partParameters.startTime, bucketItem.endsAt, event.startsAt, event.endsAt)) {
                                 canFitInThisBucket = false;
                             }
                         });
@@ -478,7 +479,7 @@
             day: 'D MMM',
             month: 'MMMM',
             // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
-            weekDay: 'dd'    // weekDay: 'dddd'
+            weekDay: 'ddd'    // weekDay: 'dddd'
         };
         var defaultTitleFormats = {
             day: 'dddd D MMMM, YYYY',
@@ -711,7 +712,12 @@
             controller: [
                 '$scope',
                 '$sce',
-                function ($scope, $sce) {
+                'practitionerPageServices',
+                'calendarServices',
+                function ($scope, $sce, practitionerPageServices, calendarServices) {
+                    // customization
+                    var pps = practitionerPageServices;
+                    var cs = calendarServices;
                     var vm = this;
                     vm.$sce = $sce;
                     var unbindWatcher = $scope.$watch('isOpen', function (isOpen) {
@@ -737,9 +743,9 @@
                 events: '=',
                 currentDay: '=',
                 unscheduledEvents: '=',
-                onEventClick: '&',
+                onEventClick: '=',
                 editEventHtml: '=',
-                onEditEventClick: '&',
+                onEditEventClick: '=',
                 deleteEventHtml: '=',
                 onDeleteEventClick: '='
             }
@@ -791,9 +797,9 @@
                 events: '=',
                 unscheduledEvents: '=',
                 currentDay: '=',
-                onEventClick: '&',
-                onEditEventClick: '&',
-                onDeleteEventClick: '&',
+                onEventClick: '=',
+                onEditEventClick: '=',
+                onDeleteEventClick: '=',
                 editEventHtml: '=',
                 deleteEventHtml: '=',
                 autoOpen: '=',
@@ -810,6 +816,10 @@
                 function ($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
                     var vm = this;
                     var firstRun = true;
+                    ///////// CUSTOMIZATION
+                    var pps = practitionerPageServices;
+                    $scope.icons = pps.icons;
+                    $scope.prettyName = pps.prettyName;
                     $scope.$on('calendar.refreshView', function () {
                         vm.weekDays = calendarHelper.getWeekDayNames();
                         vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
@@ -833,7 +843,6 @@
                             $scope.onTimespanClick({ calendarDate: day.date.toDate() });
                         }
                         vm.view.forEach(function (monthDay) {
-                            // customization
                             monthDay.isOpened = false;
                         });
                         vm.openEvents = day.events;
@@ -891,7 +900,7 @@
                         dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
                         dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
                         vm.dayViewSplit = parseInt($scope.dayViewSplit);
-                        vm.dayHeight = 40 / $scope.dayViewSplit * 20;
+                        vm.dayHeight = 10 / $scope.dayViewSplit * 5;
                         vm.days = [];
                         var dayCounter = moment(dayViewStart);
                         for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
@@ -946,7 +955,11 @@
                     var vm = this;
                     // CUSTOMIZATION: adding a day change function to the controller
                     vm.changeDate = function (date) {
+                        // console.log("clicked day = ", moment(date).toDate());
+                        // console.log("currentDay before click = ", $scope.currentDay);
                         $scope.currentDay = moment(date).toDate();
+                        console.log('currentDay after click = ', $scope.currentDay);
+                        $scope.listDate = moment(date).toDate();    // console.log("listDate is another variable that is set... just in case it messes anything up... = ", $scope.listDate);
                     };
                     vm.changeView = function (view, newDay) {
                         $scope.view = view;

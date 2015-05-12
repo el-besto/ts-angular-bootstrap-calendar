@@ -20,7 +20,7 @@ angular
         autoOpen: '=',
         onTimespanClick: '='
       },
-      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices) {
+      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
 
         var vm = this;
         var firstRun = true;
