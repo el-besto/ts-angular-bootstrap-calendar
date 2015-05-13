@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('mwl.calendar', ['reflect']);
+angular.module('mwl.calendar',[]);

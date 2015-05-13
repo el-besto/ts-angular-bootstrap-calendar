@@ -9,8 +9,8 @@ angular
       day: 'D MMM',
       month: 'MMMM',
       // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
-      weekDay: 'dd'
-      // weekDay: 'dddd'
+      // weekDay: 'ddd'
+      weekDay: 'ddd'
     };
 
     var defaultTitleFormats = {

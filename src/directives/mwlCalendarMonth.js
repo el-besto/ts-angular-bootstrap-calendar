@@ -20,10 +20,14 @@ angular
         autoOpen: '=',
         onTimespanClick: '='
       },
-      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices) {
+      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
 
         var vm = this;
         var firstRun = true;
+///////// CUSTOMIZATION
+        var pps = practitionerPageServices;
+        $scope.icons= pps.icons;
+        $scope.prettyName = pps.prettyName;
 
         
 
