@@ -1,8 +1,8 @@
-<div class="cal-context" ng-switch="view">
+<!-- <div class="cal-context" ng-switch="view"> -->
 
   <div class="alert alert-danger" ng-switch-default>The value passed to calendar-view is not set</div>
 
-  <mwl-calendar-year
+  <!-- <mwl-calendar-year
     events="events"
     current-day="currentDay"
     on-event-click="onEventClick"
@@ -13,11 +13,10 @@
     delete-event-html="deleteEventHtml"
     auto-open="autoOpen"
     ng-switch-when="year"
-  ></mwl-calendar-year>
+  ></mwl-calendar-year> -->
 
   <mwl-calendar-month
     events="events"
-    unscheduled-events="unscheduledEvents"
     current-day="currentDay"
     on-event-click="onEventClick"
     on-edit-event-click="onEditEventClick"
@@ -26,10 +25,10 @@
     edit-event-html="editEventHtml"
     delete-event-html="deleteEventHtml"
     auto-open="autoOpen"
-    ng-switch-when="month"
+    
     ></mwl-calendar-month>
 
-  <mwl-calendar-week
+  <!-- <mwl-calendar-week
     events="events"
     current-day="currentDay"
     on-event-click="onEventClick"
@@ -46,4 +45,4 @@
     day-view-split="{{ dayViewSplit || 30 }}"
     ng-switch-when="day"
     ></mwl-calendar-day>
-</div>
+</div> -->
