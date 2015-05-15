@@ -714,11 +714,10 @@
                 '$scope',
                 '$sce',
                 'practitionerPageServices',
-                'calendarServices',
-                function ($scope, $sce, practitionerPageServices, calendarServices) {
+                function ($scope, $sce, practitionerPageServices) {
                     // customization
-                    var pps = practitionerPageServices;
-                    var cs = calendarServices;
+                    // var pps = practitionerPageServices;
+                    // var cs = calendarServices;
                     var vm = this;
                     vm.$sce = $sce;
                     var unbindWatcher = $scope.$watch('isOpen', function (isOpen) {
@@ -811,16 +810,13 @@
                 'moment',
                 'calendarHelper',
                 '$log',
-                'reflectServices',
-                'practitionerPageServices',
-                'calendarServices',
-                function ($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
+                function ($scope, moment, calendarHelper, $log) {
                     var vm = this;
                     var firstRun = true;
                     ///////// CUSTOMIZATION
-                    var pps = practitionerPageServices;
-                    $scope.icons = pps.icons;
-                    $scope.prettyName = pps.prettyName;
+                    // var pps = practitionerPageServices;
+                    // $scope.icons= pps.icons;
+                    // $scope.prettyName = pps.prettyName;
                     $scope.$on('calendar.refreshView', function () {
                         vm.weekDays = calendarHelper.getWeekDayNames();
                         vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
