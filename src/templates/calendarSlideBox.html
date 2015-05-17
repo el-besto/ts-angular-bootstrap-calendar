@@ -1,4 +1,4 @@
-<!-- <div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse">
+<div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse">
   <div class="cal-slide-content cal-event-list">
     <ul class="unstyled list-unstyled">
         <div ng-show="events.length === 0" class="event-list-header">
@@ -19,21 +19,21 @@
                       </span>
                       <br>
                       <span class="scheduled-tasks-date ts-burgundy">
-                        {{event.partParameters.startTime | date: 'EEEE'}}
+                        {{event.startsAt | date: 'EEEE'}}
                       </span>
                       <br>
                       <span class="scheduled-tasks-date ts-burgundy">
-                        {{event.partParameters.startTime | date: 'MMM. dd' }}
+                        {{event.startsAt | date: 'MMM. dd' }}
                       </span>
                   </div>
                   <div class="col-xs-2">
                       <span class="scheduled-tasks-time gray-light">
-                        {{event.partParameters.startTime | date: 'h:mm a'}}
+                        {{event.startsAt | date: 'h:mm a'}}
                       </span>
                   </div>
-                  <div class="col-xs-6 event-list-primary-details"> -->
+                  <div class="col-xs-6 event-list-primary-details">
                       <!-- event icon -->
-                      <!-- <span class="small icon-{{ icons[event.assessmentPartType] }} gray-dark">
+                      <span class="small icon-{{ icons[event.assessmentPartType] }} gray-dark">
                       <span class="event-list-title gray-dark">
                         <a
                           href="javascript:;"
@@ -64,7 +64,7 @@
                         ng-if="editEventHtml && event.editable !== false"
                         ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)"
                         ng-click="onEditEventClick({calendarEvent: event})">
-                      </a> -->
+                      </a>
                       <!-- <a
                         href="javascript:;"
                         class="pull-right ts-blue event-item-delete"
@@ -72,7 +72,7 @@
                         ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)"
                         ng-click="onDeleteEventClick({calendarEvent: event})">
                       </a> -->
-                  <!-- </div>   
+                  </div>   
               </div>
               <hr class="event-list-separator" ng-if="!$last">  
               
@@ -82,4 +82,4 @@
     </ul>
 
   </div>
-</div> -->
+</div>
