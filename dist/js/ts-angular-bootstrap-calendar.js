@@ -39,10 +39,7 @@
     angular.module('mwl.calendar').factory('calendarHelper', [
         'moment',
         'calendarConfig',
-        'reflectServices',
-        'calendarServices',
-        'practitionerPageServices',
-        function (moment, calendarConfig, reflectServices, calendarServices, practitionerPageServices) {
+        function (moment, calendarConfig) {
             // CUSTOMIZATION: change eventEnd to be the same as eventStart
             function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
                 eventStart = moment(eventStart);
@@ -713,8 +710,7 @@
             controller: [
                 '$scope',
                 '$sce',
-                'practitionerPageServices',
-                function ($scope, $sce, practitionerPageServices) {
+                function ($scope, $sce) {
                     // customization
                     // var pps = practitionerPageServices;
                     // var cs = calendarServices;

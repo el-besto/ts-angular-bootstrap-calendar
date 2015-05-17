@@ -2,14 +2,14 @@
 
 angular
   .module('mwl.calendar')
-  .factory('calendarHelper', function (moment, calendarConfig, reflectServices, calendarServices, practitionerPageServices) {
+  .factory('calendarHelper', function (moment, calendarConfig) {
 
     // CUSTOMIZATION: change eventEnd to be the same as eventStart
 
     function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {
 
       eventStart = moment(eventStart);
-      eventEnd = moment(eventStart);
+      eventEnd = moment(eventEnd);
       periodStart = moment(periodStart);
       periodEnd = moment(periodEnd);
 
@@ -25,7 +25,7 @@ angular
       var startPeriod = moment(calendarDate).startOf(period);
       var endPeriod = moment(calendarDate).endOf(period);
       return allEvents.filter(function(event) {
-        return eventIsInPeriod(event.startsAt, event.startsAt, startPeriod, endPeriod);
+        return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
       });
     }
 
@@ -54,7 +54,7 @@ angular
         var startPeriod = month.clone();
         var endPeriod = startPeriod.clone().endOf('month');
         var periodEvents = eventsInPeriod.filter(function(event) {
-          return eventIsInPeriod(event.startsAt, event.startsAt, startPeriod, endPeriod);
+          return eventIsInPeriod(event.startsAt, event.endsAt, startPeriod, endPeriod);
         });
         view.push({
           label: startPeriod.format(calendarConfig.dateFormats.month),
@@ -86,7 +86,7 @@ angular
         var monthEvents = [];
         if (inMonth) {
           monthEvents = eventsInPeriod.filter(function(event) {
-            return eventIsInPeriod(event.startsAt, event.startsAt, day, day.clone().endOf('day'));
+            return eventIsInPeriod(event.startsAt, event.endsAt, day, day.clone().endOf('day'));
           });
         }
 
@@ -132,11 +132,11 @@ angular
       }
 
       var eventsSorted = events.filter(function(event) {
-        return eventIsInPeriod(event.startsAt, event.startsAt, startOfWeek, endOfWeek);
+        return eventIsInPeriod(event.startsAt, event.endsAt, startOfWeek, endOfWeek);
       }).map(function(event) {
 
         var eventStart = moment(event.startsAt).startOf('day');
-        var eventEnd = moment(event.startsAt).startOf('day');
+        var eventEnd = moment(event.endsAt).startOf('day');
         var weekViewStart = moment(startOfWeek).startOf('day');
         var weekViewEnd = moment(endOfWeek).startOf('day');
         var offset, span;
@@ -179,7 +179,7 @@ angular
       return eventsInPeriod.filter(function(event) {
         return eventIsInPeriod(
           event.startsAt,
-          event.startsAt,
+          event.endsAt,
           moment(currentDay).startOf('day').toDate(),
           moment(currentDay).endOf('day').toDate()
         );
@@ -216,8 +216,8 @@ angular
           var canFitInThisBucket = true;
 
           bucket.forEach(function(bucketItem) {
-            if (eventIsInPeriod(event.startsAt, event.startsAt, bucketItem.partParameters.startTime, bucketItem.endsAt) ||
-              eventIsInPeriod(bucketItem.partParameters.startTime, bucketItem.endsAt, event.startsAt, event.startsAt)) {
+            if (eventIsInPeriod(event.startsAt, event.endsAt, bucketItem.startsAt, bucketItem.endsAt) ||
+              eventIsInPeriod(bucketItem.startsAt, bucketItem.endsAt, event.startsAt, event.endsAt)) {
               canFitInThisBucket = false;
             }
           });

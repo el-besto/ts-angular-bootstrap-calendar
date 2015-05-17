@@ -8,7 +8,7 @@ angular
       restrict: 'EA',
       templateUrl: 'src/templates/calendarSlideBox.html',
       replace: true,
-      controller: function($scope, $sce, practitionerPageServices) {
+      controller: function($scope, $sce) {
 // customization
         // var pps = practitionerPageServices;
         // var cs = calendarServices;
