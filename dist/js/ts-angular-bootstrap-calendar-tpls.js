@@ -965,9 +965,9 @@
                         // console.log("clicked day = ", moment(date).toDate());
                         // console.log("currentDay before click = ", $scope.currentDay);
                         $scope.currentDay = moment(date).toDate();
-                        // console.log("currentDay after click = ", $scope.currentDay);
-                        $parent.currentDay = $scope.currentDay;    // $scope.listDate = moment(date).toDate();
-                                                                   // console.log("listDate is another variable that is set... just in case it messes anything up... = ", $scope.listDate);
+                        $parent.selectedDate($scope.calendarDay, $scope.currentDay);    // console.log("currentDay after click = ", $scope.currentDay);
+                                                                                        // $scope.listDate = moment(date).toDate();
+                                                                                        // console.log("listDate is another variable that is set... just in case it messes anything up... = ", $scope.listDate);
                     };
                     vm.changeView = function (view, newDay) {
                         $scope.view = view;
