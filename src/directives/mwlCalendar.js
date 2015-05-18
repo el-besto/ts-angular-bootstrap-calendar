@@ -35,8 +35,8 @@ angular
           
           // console.log("currentDay before click = ", $scope.currentDay);
           $scope.currentDay = moment(date).toDate();
-          $parent.selectedDate($scope.calendarDay, $scope.currentDay);
           // console.log("currentDay after click = ", $scope.currentDay);
+          
           // $scope.listDate = moment(date).toDate();
           // console.log("listDate is another variable that is set... just in case it messes anything up... = ", $scope.listDate);
         };
