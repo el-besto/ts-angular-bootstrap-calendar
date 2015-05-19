@@ -127,7 +127,7 @@
   text-overflow: ellipsis;
 }
 .cal-events-num {
-  margin-top: 20px;
+  margin-top: 7px;
 }
 .cal-month-day {
   position: relative;
@@ -136,7 +136,7 @@
 }
 .cal-month-day .cal-events-num {
   margin-left: 10px;
-  margin-top: 18px;
+  margin-top: 9px;
 }
 #cal-week-box {
   position: absolute;
@@ -468,13 +468,13 @@ span[data-cal-date]:hover {
   cursor: default;
 }
 .cal-day-today {
-  background-color: #e8fde7;
+  background-color: rgba(255, 153, 0, 0.5);
 }
 .cal-day-today span[data-cal-date] {
   color: darkgreen;
 }
 .cal-month-box .cal-day-today span[data-cal-date] {
-  font-size: 1.9em;
+  font-size: 1.1em;
 }
 .cal-day-holiday span[data-cal-date] {
   color: #800080;
@@ -490,7 +490,7 @@ span[data-cal-date]:hover {
   text-align: right;
 }
 .cal-week-box .cal-row-head {
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1 !important;
 }
 .cal-day-tick {
   border: 1px solid #e1e1e1;
