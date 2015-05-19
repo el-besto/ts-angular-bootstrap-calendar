@@ -8,10 +8,8 @@ angular
       restrict: 'EA',
       templateUrl: 'src/templates/calendarSlideBox.html',
       replace: true,
-      controller: function($scope, $sce, practitionerPageServices, calendarServices) {
-// customization
-        var pps = practitionerPageServices;
-        var cs = calendarServices;
+      controller: function($scope, $sce) {
+
         var vm = this;
         vm.$sce = $sce;
 
@@ -34,8 +32,6 @@ angular
       scope: {
         isOpen: '=',
         events: '=',
-        currentDay: '=',
-        unscheduledEvents: '=',
         onEventClick: '=',
         editEventHtml: '=',
         onEditEventClick: '=',

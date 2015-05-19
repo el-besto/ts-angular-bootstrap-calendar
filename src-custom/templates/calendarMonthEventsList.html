@@ -1,0 +1,28 @@
+<div class="events-list cal-month-day-dots" ng-show="day.events.length > 0">
+  <!-- CUSTOMIZATION: 
+    1. remove the link for accessibility reasons...
+    2. add class cal-month-day-dots -->
+  <span
+    href="javascript:;"
+    ng-click="onEventClick({calendarEvent: event})"
+    ng-repeat="event in day.events track by $index"
+    class="pull-left event event-{{ event.type }}"
+    ng-mouseenter="vm.highlightEvent(event, true)"
+    ng-mouseleave="vm.highlightEvent(event, false)"
+    tooltip-append-to-body="true"
+    tooltip="{{ event.title }}"
+    aria-ignore="true"
+    ></span>
+    
+  <a
+    href="javascript:;"
+    ng-click="onEventClick({calendarEvent: event})"
+    ng-repeat="event in day.events track by $index"
+    class="pull-left event event-{{ event.type }}"
+    ng-mouseenter="vm.highlightEvent(event, true)"
+    ng-mouseleave="vm.highlightEvent(event, false)"
+    tooltip-append-to-body="true"
+    tooltip="{{ event.title }}"
+    aria-ignore="true"
+    ></a>
+</div>

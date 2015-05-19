@@ -1,0 +1,29 @@
+<div
+  class="cal-month-day"
+  ng-class="{
+            'cal-day-outmonth': !day.inMonth,
+            'cal-day-inmonth': day.inMonth,
+            'cal-day-weekend': day.isWeekend,
+            'cal-day-past': day.isPast,
+            'cal-day-today': day.isToday,
+            'cal-day-future': day.isFuture
+          }">
+
+
+  <!-- CUSTOMIZATION: Calendar Day -->
+    <span
+      class="calMonthDayNumber"
+      data-cal-date
+      ng-click="vm.calendarCtrl.changeDate(day.date)">
+      {{ day.label }}
+    </span>
+    <span
+      class="calMonthDayEventCount">
+      <small
+        class="cal-events-num badge badge-important"
+        ng-show="day.badgeTotal > 0">
+        {{ day.badgeTotal }}
+      </small>
+    </span>
+
+</div>

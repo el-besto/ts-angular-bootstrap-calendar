@@ -36,6 +36,7 @@ angular
               }
             });
           }
+
         });
 
         vm.monthClicked = function(month, monthClickedFirstRun) {
@@ -44,10 +45,12 @@ angular
             $scope.onTimespanClick({calendarDate: month.date.toDate()});
           }
 
-          vm.openEvents = month.events;
           vm.openRowIndex = null;
-          if (vm.openEvents.length > 0) {
-            var monthIndex = vm.view.indexOf(month);
+          var monthIndex = vm.view.indexOf(month);
+          if (monthIndex === vm.openMonthIndex) { //the month has been clicked and is already open
+            vm.openMonthIndex = null; //close the open month
+          } else {
+            vm.openMonthIndex = monthIndex;
             vm.openRowIndex = Math.floor(monthIndex / 4);
           }
 

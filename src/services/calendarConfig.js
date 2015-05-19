@@ -8,9 +8,7 @@ angular
       hour: 'ha',
       day: 'D MMM',
       month: 'MMMM',
-      // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
-      // weekDay: 'ddd'
-      weekDay: 'ddd'
+      weekDay: 'dddd'
     };
 
     var defaultTitleFormats = {

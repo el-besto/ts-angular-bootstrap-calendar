@@ -1,108 +1,38 @@
 'use strict';
 
 angular
-  .module('reflectCalendar', ['mwl.calendar', 'ui.bootstrap'])
+  .module('demo', ['mwl.calendar', 'ui.bootstrap', 'ngAnimate'])
   .controller('MainCtrl', function ($scope, $modal, moment) {
-
-    // IDEAS 
-    // function parseEvents = function (eventObject) {var scheduledEvents = [
-    // grab object
-    // create two arrays (scheduled, unscheduled);
-    // loop through and push into the appropriate array;
-
-    // ng-repeat over the arrays
-    //   add watch for isScheduled
-
-
-
-
-
-
-
-    var currentYear = moment().year();
-    var currentMonth = moment().month();
 
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
-    
-
-    $scope.logDay = function (day) {
-      console.log("Angelo" + getEventsInPeriod($scope.calendarDay));
-
-    }
-    
-
-
     $scope.events = [
       {
-        title: 'Evidence for Announced Observation',
-
-        //ts-only-attributes
-        assessmentPartId: 1443810,
-        scheduled: false,
-        startTime: null,
-        state: "NOT_STARTED",
-        complete: false,
-        description: "Educator uses this to upload artifacts to support the Final SLO Score.",
-
-        actorType: "TEACHER",
-        actorId: 733505,
-        actorLastNameFirstName: "Teacher01, MMSD",
-        actorName: "MMSD Teacher01",
-
-        //angular-bootstrap-calendar, default attributes for 
+        title: 'Event 1',
         type: 'warning',
-        startsAt: new Date(currentYear,currentMonth,25,8,30),
-        endsAt: new Date(currentYear,currentMonth,25,9,30)
+        startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
+        endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate()
       },
       {
-        title: 'Evidence for Announced Observation',
+        title: 'Event 2',
         type: 'info',
-        scheduled: true,
-        startsAt: new Date(currentYear,currentMonth,19,7,30),
-        endsAt: new Date(currentYear,currentMonth,25,9,30),
-        observer: {
-          firstName: 'Scotty',
-          lastName: 'Pipen'
-        }
+        startsAt: moment().subtract(1, 'day').toDate(),
+        endsAt: moment().add(5, 'days').toDate()
       },
       {
-        title: 'Evidence for Announced Observation',
+        title: 'This is a really long event title',
         type: 'important',
-        scheduled: true,
-        startsAt: new Date(currentYear,currentMonth,25,6,30),
-        endsAt: new Date(currentYear,currentMonth,25,6,60),
-        observer: {
-          firstName: 'Michael',
-          lastName: 'Jordan'
-        }
-      },
-      {
-        title: 'No startsAt set',
-        type: 'important',
-        scheduled: false,
-        startsAt: '',
-        endsAt: new Date(currentYear,currentMonth,25,6,60),
-        observer: {
-          firstName: 'Michael',
-          lastName: 'Jordan'
-        }
-      },
-      {
-        title: 'No startsAt set',
-        type: 'important',
-        scheduled: false,
-        startsAt: '',
-        endsAt: new Date(currentYear,currentMonth,25,6,60),
-        observer: {
-          firstName: 'Michael',
-          lastName: 'Jordan'
-        }
+        startsAt: moment().startOf('day').add(5, 'hours').toDate(),
+        endsAt: moment().startOf('day').add(19, 'hours').toDate()
       }
     ];
 
-    /*function random(min, max) {
+    /*
+     var currentYear = moment().year();
+     var currentMonth = moment().month();
+
+    function random(min, max) {
       return Math.floor((Math.random() * max) + min);
     }
 

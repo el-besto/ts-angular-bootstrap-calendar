@@ -10,7 +10,6 @@ angular
       require: '^mwlCalendar',
       scope: {
         events: '=',
-        unscheduledEvents: '=',
         currentDay: '=',
         onEventClick: '=',
         onEditEventClick: '=',
@@ -20,18 +19,13 @@ angular
         autoOpen: '=',
         onTimespanClick: '='
       },
-      controller: function($scope, moment, calendarHelper, $log, reflectServices, practitionerPageServices, calendarServices) {
+      controller: function($scope, moment, calendarHelper) {
 
         var vm = this;
         var firstRun = true;
-///////// CUSTOMIZATION
-        var pps = practitionerPageServices;
-        $scope.icons= pps.icons;
-        $scope.prettyName = pps.prettyName;
-
-        
 
         $scope.$on('calendar.refreshView', function() {
+
           vm.weekDays = calendarHelper.getWeekDayNames();
 
           vm.view = calendarHelper.getMonthView($scope.events, $scope.currentDay);
@@ -50,23 +44,24 @@ angular
               }
             });
           }
+
         });
 
         vm.dayClicked = function(day, dayClickedFirstRun) {
 
           if (!dayClickedFirstRun) {
-            $scope.onTimespanClick({calendarDate: day.date.toDate()});
+            $scope.onTimespanClick({
+              calendarDate: day.date.toDate()
+            });
           }
 
-          vm.view.forEach(function(monthDay) {
-            monthDay.isOpened = false;
-          });
-          vm.openEvents = day.events;
           vm.openRowIndex = null;
-          if (vm.openEvents.length > 0) {
-            var dayIndex = vm.view.indexOf(day);
+          var dayIndex = vm.view.indexOf(day);
+          if (dayIndex === vm.openDayIndex) { //the day has been clicked and is already open
+            vm.openDayIndex = null; //close the open day
+          } else {
+            vm.openDayIndex = dayIndex;
             vm.openRowIndex = Math.floor(dayIndex / 7);
-            day.isOpened = true;
           }
 
         };

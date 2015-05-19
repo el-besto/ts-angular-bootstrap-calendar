@@ -6,14 +6,12 @@ var runSequence = require('run-sequence');
 var bowerFiles = require('main-bower-files');
 var series = require('stream-series');
 
-// TEACHSCAPE
-// var localReflect = ('../reflect/ts-angular-bootstrap-calendar/');
-
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
   gulp.start('test:watch');
   gulp.watch('src/less/*.less', ['less']);
-  gulp.watch('src/**/*.js', ['lint']);
+  gulp.watch('src/**/*.js', ['eslint']);
+  gulp.watch('src/templates/**/*.html', ['htmlhint']);
   gulp.watch('css/*.css').on('change', $.livereload.changed);
   gulp.watch([
     './index.html',
@@ -36,6 +34,7 @@ gulp.task('server', function() {
 
 gulp.task('less', function() {
   return gulp.src('src/less/calendar.less')
+    .pipe($.plumber())
     .pipe($.less())
     .pipe($.rename('calendar.css'))
     .pipe(gulp.dest('css'))
@@ -121,7 +120,6 @@ gulp.task('js', ['js-tpls'], function() {
 });
 
 gulp.task('build', ['js', 'css'], function() {});
-gulp.task('dev', ['js', 'css'], function() {});
 
 function release(importance) {
   return gulp.src(['./package.json', './bower.json'])
@@ -129,10 +127,13 @@ function release(importance) {
     .pipe(gulp.dest('./'));
 }
 
+gulp.task('bump:patch', function() { return release('patch'); });
+gulp.task('bump:minor', function() { return release('minor'); });
+gulp.task('bump:major', function() { return release('major'); });
 
 gulp.task('default', ['watch'], function() {});
 
-function lint(failOnError) {
+function eslint(failOnError) {
   var stream = gulp.src(['src/**/*.js'])
     .pipe($.eslint())
     .pipe($.eslint.format());
@@ -144,13 +145,38 @@ function lint(failOnError) {
   }
 }
 
-gulp.task('lint', function() {
-  return lint();
+gulp.task('eslint', function() {
+  return eslint();
 });
 
-gulp.task('ci:lint', function() {
-  return lint(true);
+gulp.task('ci:eslint', function() {
+  return eslint(true);
 });
+
+function htmlhint(failOnError) {
+  var stream = gulp
+    .src('src/templates/*.html')
+    .pipe($.htmlhint('.htmlhintrc'))
+    .pipe($.htmlhint.reporter());
+
+  if (failOnError) {
+    return stream.pipe($.htmlhint.failReporter());
+  } else {
+    return stream;
+  }
+}
+
+gulp.task('htmlhint', function() {
+  return htmlhint();
+});
+
+gulp.task('ci:htmlhint', function() {
+  return htmlhint(true);
+});
+
+gulp.task('lint', ['eslint', 'htmlhint']);
+
+gulp.task('ci:lint', ['ci:eslint', 'ci:htmlhint']);
 
 function runTests(action, onDistCode) {
   var vendorJs = gulp.src(bowerFiles({includeDev: true})).pipe($.filter('*.js'));

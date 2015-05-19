@@ -1,86 +1,36 @@
-<!-- <div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse">
+<div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse">
   <div class="cal-slide-content cal-event-list">
     <ul class="unstyled list-unstyled">
-        <div ng-show="events.length === 0" class="event-list-header">
-            <h4 class="gray-light"><em>
-              No events scheduled for day
-            </em></h4>
-        </div>
 
-        <div class="row">
-          <div class="col-xs-12" 
-               ng-repeat="event in events track by $index">
-              <div class="row">
-                  <div class="col-xs-2">
-                      <span class="scheduled-tasks-date ts-burgundy">
-                        <span ng-if="$first">TODAY</span>
-                        <span ng-if="$first">{{calendarDate}}</span>
-                        <span ng-if="!$first">{{calendarDate}}</span>               
-                      </span>
-                      <br>
-                      <span class="scheduled-tasks-date ts-burgundy">
-                        {{event.partParameters.startTime | date: 'EEEE'}}
-                      </span>
-                      <br>
-                      <span class="scheduled-tasks-date ts-burgundy">
-                        {{event.partParameters.startTime | date: 'MMM. dd' }}
-                      </span>
-                  </div>
-                  <div class="col-xs-2">
-                      <span class="scheduled-tasks-time gray-light">
-                        {{event.partParameters.startTime | date: 'h:mm a'}}
-                      </span>
-                  </div>
-                  <div class="col-xs-6 event-list-primary-details">
-                      <!-- event icon -->
-                      <span class="small icon-{{ icons[event.assessmentPartType] }} gray-dark">
-                      <span class="event-list-title gray-dark">
-                        <a
-                          href="javascript:;"
-                          class="event-item gray-dark"
-                          ng-click="onEventClick({calendarEvent: event})">
-                        {{event.title }}
-                        </a>
-                      </span>
-                      <br>
-                      <span class="event-list-event-type pull-left gray-dark">
-                        <span class="tree-left-icon small icon-{{ icons[event.assessmentPartType] }} pull-left"></span> {{event.assessmentPartType | lowercase}}
-                      </span>
-                      <br>
-                      <span class="event-list-observer pull-left gray-dark ">
-                        Observer: {{event.actorLastNameFirstName}}
-                      </span>
-                  </div>
-                  <div class="col-xs-2">
-                      <span ng-show="event.actorId === $scope.currentUserActorId" class="pull-right event-list-action ts-blue">
-                        <button 
-                          class="btn btn-primary"
-                          ng-click="logDay()">
-                          reschedule</button>
-                      </span>
-                      <a
-                        href="javascript:;"
-                        class="pull-right ts-blue event-item-edit"
-                        ng-if="editEventHtml && event.editable !== false"
-                        ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)"
-                        ng-click="onEditEventClick({calendarEvent: event})">
-                      </a>
-                      <!-- <a
-                        href="javascript:;"
-                        class="pull-right ts-blue event-item-delete"
-                        ng-if="deleteEventHtml && event.deletable !== false"
-                        ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)"
-                        ng-click="onDeleteEventClick({calendarEvent: event})">
-                      </a> -->
-                  </div>   
-              </div>
-              <hr class="event-list-separator" ng-if="!$last">  
-              
-          </div>
+      <li ng-repeat="event in events track by $index">
+        <span class="pull-left event" ng-class="'event-' + event.type"></span>
+        &nbsp;
+        <a
+          href="javascript:;"
+          class="event-item"
+          ng-click="onEventClick({calendarEvent: event})">
+          <span ng-bind="event.title"></span>
+          <span ng-show="isMonthView">(<span ng-bind="event.startsAt | date:'shortTime'"></span>)</span>
+          <span ng-show="isYearView">(<span ng-bind="event.startsAt | date:'MMM d, h:mm a'"></span>)</span>
+        </a>
 
+        <a
+          href="javascript:;"
+          class="event-item-edit"
+          ng-if="editEventHtml && event.editable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)"
+          ng-click="onEditEventClick({calendarEvent: event})">
+        </a>
+
+        <a
+          href="javascript:;"
+          class="event-item-delete"
+          ng-if="deleteEventHtml && event.deletable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)"
+          ng-click="onDeleteEventClick({calendarEvent: event})">
+        </a>
+      </li>
 
     </ul>
-
   </div>
 </div>
- -->
