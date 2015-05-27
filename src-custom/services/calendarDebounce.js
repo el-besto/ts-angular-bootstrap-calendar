@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .service('calendarDebounce', function($timeout) {
 
     function debounce(func, wait, immediate) {

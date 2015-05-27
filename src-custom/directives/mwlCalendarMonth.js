@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .directive('mwlCalendarMonth', function() {
 
     return {

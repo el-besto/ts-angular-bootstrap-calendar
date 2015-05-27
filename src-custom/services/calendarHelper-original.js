@@ -1,7 +1,7 @@
 // 'use strict';
 
 // angular
-//   .module('mwl.calendar')
+//   .module('reflect.calendar')
 //   .factory('calendarHelper', function (moment, calendarConfig) {
 
 //     // CUSTOMIZATION: Toggle events on calendar between 'all' and 'my'.

@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .factory('calendarHelper', function (moment, calendarConfig) {
 
     // CUSTOMIZATION: change eventEnd to be the same as eventStart

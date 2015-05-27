@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .factory('calendarHelper', function(moment, calendarConfig) {
 
     function eventIsInPeriod(eventStart, eventEnd, periodStart, periodEnd) {

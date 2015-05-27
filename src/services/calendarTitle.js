@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .factory('calendarTitle', function(moment, calendarConfig) {
 
     function day(currentDay) {

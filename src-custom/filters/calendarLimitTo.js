@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .filter('calendarLimitTo', function() {
 
     //Copied from the angular source. Only 1.4 has the begin functionality.

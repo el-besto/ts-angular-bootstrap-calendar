@@ -35,7 +35,7 @@ module.exports = function(config) {
     },
 
     ngHtml2JsPreprocessor: {
-      moduleName: 'mwl.calendar'
+      moduleName: 'reflect.calendar'
     },
 
     // test results reporter to use

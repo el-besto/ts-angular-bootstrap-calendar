@@ -1,5 +1,5 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .constant('moment', window.moment);

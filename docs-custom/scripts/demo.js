@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('reflectCalendar', ['mwl.calendar', 'ui.bootstrap'])
+  .module('reflectCalendar', ['reflect.calendar', 'ui.bootstrap'])
   .controller('MainCtrl', function ($scope, $modal, moment) {
 
     // IDEAS 
