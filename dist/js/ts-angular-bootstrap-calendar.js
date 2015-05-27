@@ -6,11 +6,11 @@
  */
 (function (window, angular) {
     'use strict';
-    angular.module('mwl.calendar', []);
+    angular.module('reflect.calendar', []);
     'use strict';
-    angular.module('mwl.calendar').constant('moment', window.moment);
+    angular.module('reflect.calendar').constant('moment', window.moment);
     'use strict';
-    angular.module('mwl.calendar').factory('calendarTitle', [
+    angular.module('reflect.calendar').factory('calendarTitle', [
         'moment',
         'calendarConfig',
         function (moment, calendarConfig) {
@@ -36,7 +36,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').factory('calendarHelper', [
+    angular.module('reflect.calendar').factory('calendarHelper', [
         'moment',
         'calendarConfig',
         function (moment, calendarConfig) {
@@ -233,7 +233,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').service('calendarDebounce', [
+    angular.module('reflect.calendar').service('calendarDebounce', [
         '$timeout',
         function ($timeout) {
             function debounce(func, wait, immediate) {
@@ -258,12 +258,14 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').provider('calendarConfig', function () {
+    angular.module('reflect.calendar').provider('calendarConfig', function () {
         var defaultDateFormats = {
             hour: 'ha',
             day: 'D MMM',
             month: 'MMMM',
-            weekDay: 'dddd'
+            // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
+            // weekDay: 'dddd'
+            weekDay: 'ddd'
         };
         var defaultTitleFormats = {
             day: 'dddd D MMMM, YYYY',
@@ -297,7 +299,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').filter('calendarTruncateEventTitle', function () {
+    angular.module('reflect.calendar').filter('calendarTruncateEventTitle', function () {
         return function (string, length, boxHeight) {
             if (!string) {
                 return '';
@@ -311,7 +313,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').filter('calendarLimitTo', function () {
+    angular.module('reflect.calendar').filter('calendarLimitTo', function () {
         //Copied from the angular source. Only 1.4 has the begin functionality.
         return function (input, limit, begin) {
             if (Math.abs(Number(limit)) === Infinity) {
@@ -340,7 +342,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlDateModifier', function () {
+    angular.module('reflect.calendar').directive('mwlDateModifier', function () {
         return {
             restrict: 'A',
             controller: [
@@ -373,7 +375,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCollapseFallback', [
+    angular.module('reflect.calendar').directive('mwlCollapseFallback', [
         '$injector',
         function ($injector) {
             if ($injector.has('collapseDirective')) {
@@ -403,7 +405,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarYear', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarYear', function () {
         return {
             templateUrl: 'src/templates/calendarYearView.html',
             restrict: 'EA',
@@ -461,7 +463,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarWeek', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarWeek', function () {
         return {
             templateUrl: 'src/templates/calendarWeekView.html',
             restrict: 'EA',
@@ -488,7 +490,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarSlideBox', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarSlideBox', function () {
         return {
             restrict: 'EA',
             templateUrl: 'src/templates/calendarSlideBox.html',
@@ -529,7 +531,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarMonth', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarMonth', function () {
         return {
             templateUrl: 'src/templates/calendarMonthView.html',
             restrict: 'EA',
@@ -604,7 +606,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarDay', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarDay', function () {
         return {
             templateUrl: 'src/templates/calendarDayView.html',
             restrict: 'EA',
@@ -654,7 +656,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendar', function () {
+    angular.module('reflect.calendar').directive('mwlCalendar', function () {
         return {
             templateUrl: 'src/templates/calendar.html',
             restrict: 'EA',

@@ -6,13 +6,13 @@
  */
 (function (window, angular) {
     'use strict';
-    angular.module('mwl.calendar', []);
-    angular.module('mwl.calendar').run([
+    angular.module('reflect.calendar', []);
+    angular.module('reflect.calendar').run([
         '$templateCache',
         function ($templateCache) {
             $templateCache.put('src/templates/calendar.html', '<div class="cal-context" ng-switch="view"><div class="alert alert-danger" ng-switch-default>The value passed to the view attribute of the calendar is not set</div><div class="alert alert-danger" ng-hide="currentDay">The value passed to current-day attribute of the calendar is not set</div><mwl-calendar-year events="events" current-day="currentDay" on-event-click="onEventClick" on-edit-event-click="onEditEventClick" on-delete-event-click="onDeleteEventClick" on-timespan-click="onTimespanClick" edit-event-html="editEventHtml" delete-event-html="deleteEventHtml" auto-open="autoOpen" ng-switch-when="year"></mwl-calendar-year><mwl-calendar-month events="events" current-day="currentDay" on-event-click="onEventClick" on-edit-event-click="onEditEventClick" on-delete-event-click="onDeleteEventClick" on-timespan-click="onTimespanClick" edit-event-html="editEventHtml" delete-event-html="deleteEventHtml" auto-open="autoOpen" ng-switch-when="month"></mwl-calendar-month><mwl-calendar-week events="events" current-day="currentDay" on-event-click="onEventClick" ng-switch-when="week"></mwl-calendar-week><mwl-calendar-day events="events" current-day="currentDay" on-event-click="onEventClick" day-view-start="dayViewStart" day-view-end="dayViewEnd" day-view-split="dayViewSplit || 30" ng-switch-when="day"></mwl-calendar-day></div>');
             $templateCache.put('src/templates/calendarDayView.html', '<div class="cal-day-box"><div class="row-fluid clearfix cal-row-head"><div class="span1 col-xs-1 cal-cell" ng-bind="vm.calendarConfig.i18nStrings.timeLabel"></div><div class="span11 col-xs-11 cal-cell" ng-bind="vm.calendarConfig.i18nStrings.eventsLabel"></div></div><div class="cal-day-panel clearfix" ng-style="{height: (vm.hours.length * vm.hourHeight) + \'px\'}"><div class="cal-day-panel-hour"><div class="cal-day-hour" ng-repeat="hour in vm.hours track by $index"><div class="row-fluid cal-day-hour-part"><div class="span1 col-xs-1"><strong ng-bind="hour.label"></strong></div><div class="span11 col-xs-11"></div></div><div class="row-fluid cal-day-hour-part"><div class="span1 col-xs-1"></div><div class="span11 col-xs-11"></div></div><div class="row-fluid cal-day-hour-part" ng-show="vm.dayViewSplit < 30"><div class="span1 col-xs-1"></div><div class="span11 col-xs-11"></div></div><div class="row-fluid cal-day-hour-part" ng-show="vm.dayViewSplit < 30"><div class="span1 col-xs-1"></div><div class="span11 col-xs-11"></div></div><div class="row-fluid cal-day-hour-part" ng-show="vm.dayViewSplit < 15"><div class="span1 col-xs-1"></div><div class="span11 col-xs-11"></div></div><div class="row-fluid cal-day-hour-part" ng-show="vm.dayViewSplit < 15"><div class="span1 col-xs-1"></div><div class="span11 col-xs-11"></div></div></div></div><div class="pull-left day-event day-highlight" ng-class="\'dh-event-\' + event.type" ng-repeat="event in vm.view track by $index" ng-style="{top: event.top + \'px\', left: event.left + 60 + \'px\', height: event.height + \'px\'}"><a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})"><span ng-bind="event.title | calendarTruncateEventTitle:20:event.height"></span></a></div></div></div>');
-            $templateCache.put('src/templates/calendarMonthDay.html', '<div class="cal-month-day" ng-class="{\n            \'cal-day-outmonth\': !day.inMonth,\n            \'cal-day-inmonth\': day.inMonth,\n            \'cal-day-weekend\': day.isWeekend,\n            \'cal-day-past\': day.isPast,\n            \'cal-day-today\': day.isToday,\n            \'cal-day-future\': day.isFuture\n          }"><small class="cal-events-num badge badge-important pull-left" ng-show="day.badgeTotal > 0" ng-bind="day.badgeTotal"></small> <span class="pull-right" data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date)" ng-bind="day.label"></span><div class="cal-day-tick" ng-show="dayIndex === vm.openDayIndex && vm.view[vm.openDayIndex].events.length > 0"><i class="glyphicon glyphicon-chevron-up"></i> <i class="fa fa-chevron-up"></i></div><div ng-include="\'src/templates/calendarMonthEventsList.html\'"></div></div>');
+            $templateCache.put('src/templates/calendarMonthDay.html', '<div class="cal-month-day" ng-class="{\n            \'cal-day-outmonth\': !day.inMonth,\n            \'cal-day-inmonth\': day.inMonth,\n            \'cal-day-weekend\': day.isWeekend,\n            \'cal-day-past\': day.isPast,\n            \'cal-day-today\': day.isToday,\n            \'cal-day-future\': day.isFuture\n          }"><span class="pull-right" data-cal-date ng-click="vm.calendarCtrl.drillDown(day.date)" ng-bind="day.label"></span><div class="cal-day-tick" ng-show="dayIndex === vm.openDayIndex && vm.view[vm.openDayIndex].events.length > 0"><i class="glyphicon glyphicon-chevron-up"></i> <i class="fa fa-chevron-up"></i></div><div ng-include="\'src/templates/calendarMonthEventsList.html\'"></div></div>');
             $templateCache.put('src/templates/calendarMonthEventsList.html', '<div class="events-list" ng-show="day.events.length > 0"><a href="javascript:;" ng-click="onEventClick({calendarEvent: event})" ng-repeat="event in day.events track by $index" class="pull-left event" ng-class="\'event-\' + event.type" ng-mouseenter="vm.highlightEvent(event, true)" ng-mouseleave="vm.highlightEvent(event, false)" tooltip-append-to-body="true" tooltip="{{ event.title }}"></a></div>');
             $templateCache.put('src/templates/calendarMonthView.html', '<div class="cal-row-fluid cal-row-head"><div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index" ng-bind="day"></div></div><div class="cal-month-box"><div ng-repeat="rowOffset in vm.monthOffsets track by rowOffset"><div class="cal-row-fluid cal-before-eventlist"><div ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index" ng-init="dayIndex = vm.view.indexOf(day)" class="cal-cell1 cal-cell {{ day.highlightClass }}" ng-click="vm.dayClicked(day)" ng-class="{pointer: day.events.length > 0}"><div ng-include="\'src/templates/calendarMonthDay.html\'"></div></div></div><mwl-calendar-slide-box is-open="vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0" events="vm.view[vm.openDayIndex].events" on-event-click="onEventClick" edit-event-html="editEventHtml" on-edit-event-click="onEditEventClick" delete-event-html="deleteEventHtml" on-delete-event-click="onDeleteEventClick"></mwl-calendar-slide-box></div></div>');
             $templateCache.put('src/templates/calendarSlideBox.html', '<div class="cal-slide-box" collapse="vm.shouldCollapse" mwl-collapse-fallback="vm.shouldCollapse"><div class="cal-slide-content cal-event-list"><ul class="unstyled list-unstyled"><li ng-repeat="event in events track by $index"><span class="pull-left event" ng-class="\'event-\' + event.type"></span> &nbsp; <a href="javascript:;" class="event-item" ng-click="onEventClick({calendarEvent: event})"><span ng-bind="event.title"></span> <span ng-show="isMonthView">(<span ng-bind="event.startsAt | date:\'shortTime\'"></span>)</span> <span ng-show="isYearView">(<span ng-bind="event.startsAt | date:\'MMM d, h:mm a\'"></span>)</span></a> <a href="javascript:;" class="event-item-edit" ng-if="editEventHtml && event.editable !== false" ng-bind-html="vm.$sce.trustAsHtml(editEventHtml)" ng-click="onEditEventClick({calendarEvent: event})"></a> <a href="javascript:;" class="event-item-delete" ng-if="deleteEventHtml && event.deletable !== false" ng-bind-html="vm.$sce.trustAsHtml(deleteEventHtml)" ng-click="onDeleteEventClick({calendarEvent: event})"></a></li></ul></div></div>');
@@ -21,9 +21,9 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').constant('moment', window.moment);
+    angular.module('reflect.calendar').constant('moment', window.moment);
     'use strict';
-    angular.module('mwl.calendar').factory('calendarTitle', [
+    angular.module('reflect.calendar').factory('calendarTitle', [
         'moment',
         'calendarConfig',
         function (moment, calendarConfig) {
@@ -49,7 +49,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').factory('calendarHelper', [
+    angular.module('reflect.calendar').factory('calendarHelper', [
         'moment',
         'calendarConfig',
         function (moment, calendarConfig) {
@@ -246,7 +246,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').service('calendarDebounce', [
+    angular.module('reflect.calendar').service('calendarDebounce', [
         '$timeout',
         function ($timeout) {
             function debounce(func, wait, immediate) {
@@ -271,12 +271,14 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').provider('calendarConfig', function () {
+    angular.module('reflect.calendar').provider('calendarConfig', function () {
         var defaultDateFormats = {
             hour: 'ha',
             day: 'D MMM',
             month: 'MMMM',
-            weekDay: 'dddd'
+            // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
+            // weekDay: 'dddd'
+            weekDay: 'ddd'
         };
         var defaultTitleFormats = {
             day: 'dddd D MMMM, YYYY',
@@ -310,7 +312,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').filter('calendarTruncateEventTitle', function () {
+    angular.module('reflect.calendar').filter('calendarTruncateEventTitle', function () {
         return function (string, length, boxHeight) {
             if (!string) {
                 return '';
@@ -324,7 +326,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').filter('calendarLimitTo', function () {
+    angular.module('reflect.calendar').filter('calendarLimitTo', function () {
         //Copied from the angular source. Only 1.4 has the begin functionality.
         return function (input, limit, begin) {
             if (Math.abs(Number(limit)) === Infinity) {
@@ -353,7 +355,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlDateModifier', function () {
+    angular.module('reflect.calendar').directive('mwlDateModifier', function () {
         return {
             restrict: 'A',
             controller: [
@@ -386,7 +388,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCollapseFallback', [
+    angular.module('reflect.calendar').directive('mwlCollapseFallback', [
         '$injector',
         function ($injector) {
             if ($injector.has('collapseDirective')) {
@@ -416,7 +418,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarYear', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarYear', function () {
         return {
             templateUrl: 'src/templates/calendarYearView.html',
             restrict: 'EA',
@@ -474,7 +476,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarWeek', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarWeek', function () {
         return {
             templateUrl: 'src/templates/calendarWeekView.html',
             restrict: 'EA',
@@ -501,7 +503,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarSlideBox', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarSlideBox', function () {
         return {
             restrict: 'EA',
             templateUrl: 'src/templates/calendarSlideBox.html',
@@ -542,7 +544,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarMonth', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarMonth', function () {
         return {
             templateUrl: 'src/templates/calendarMonthView.html',
             restrict: 'EA',
@@ -617,7 +619,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarDay', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarDay', function () {
         return {
             templateUrl: 'src/templates/calendarDayView.html',
             restrict: 'EA',
@@ -667,7 +669,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendar', function () {
+    angular.module('reflect.calendar').directive('mwlCalendar', function () {
         return {
             templateUrl: 'src/templates/calendar.html',
             restrict: 'EA',

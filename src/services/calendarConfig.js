@@ -1,14 +1,16 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .provider('calendarConfig', function() {
 
     var defaultDateFormats = {
       hour: 'ha',
       day: 'D MMM',
       month: 'MMMM',
-      weekDay: 'dddd'
+      // CUSTOMIZATION: change to dd for Sa Su Mo Tu We Th Fr
+      // weekDay: 'dddd'
+      weekDay: 'ddd'
     };
 
     var defaultTitleFormats = {

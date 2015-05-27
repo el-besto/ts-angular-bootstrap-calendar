@@ -6,8 +6,8 @@
  */
 (function (window, angular) {
     'use strict';
-    angular.module('mwl.calendar', []);
-    angular.module('mwl.calendar').run([
+    angular.module('reflect.calendar', []);
+    angular.module('reflect.calendar').run([
         '$templateCache',
         function ($templateCache) {
             $templateCache.put('src/templates/calendar.html', '<div class="cal-context" ng-switch="view"><div class="alert alert-danger" ng-switch-default>The value passed to the view attribute of the calendar is not set</div><div class="alert alert-danger" ng-hide="currentDay">The value passed to current-day attribute of the calendar is not set</div><mwl-calendar-year events="events" current-day="currentDay" on-event-click="onEventClick" on-edit-event-click="onEditEventClick" on-delete-event-click="onDeleteEventClick" on-timespan-click="onTimespanClick" edit-event-html="editEventHtml" delete-event-html="deleteEventHtml" auto-open="autoOpen" ng-switch-when="year"></mwl-calendar-year><mwl-calendar-month events="events" current-day="currentDay" on-event-click="onEventClick" on-edit-event-click="onEditEventClick" on-delete-event-click="onDeleteEventClick" on-timespan-click="onTimespanClick" edit-event-html="editEventHtml" delete-event-html="deleteEventHtml" auto-open="autoOpen" ng-switch-when="month"></mwl-calendar-month><mwl-calendar-week events="events" current-day="currentDay" on-event-click="onEventClick" ng-switch-when="week"></mwl-calendar-week><mwl-calendar-day events="events" current-day="currentDay" on-event-click="onEventClick" day-view-start="dayViewStart" day-view-end="dayViewEnd" day-view-split="dayViewSplit || 30" ng-switch-when="day"></mwl-calendar-day></div>');
@@ -21,9 +21,9 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').constant('moment', window.moment);
+    angular.module('reflect.calendar').constant('moment', window.moment);
     'use strict';
-    angular.module('mwl.calendar').factory('calendarTitle', [
+    angular.module('reflect.calendar').factory('calendarTitle', [
         'moment',
         'calendarConfig',
         function (moment, calendarConfig) {
@@ -49,7 +49,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').factory('calendarHelper', [
+    angular.module('reflect.calendar').factory('calendarHelper', [
         'moment',
         'calendarConfig',
         function (moment, calendarConfig) {
@@ -246,7 +246,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').service('calendarDebounce', [
+    angular.module('reflect.calendar').service('calendarDebounce', [
         '$timeout',
         function ($timeout) {
             function debounce(func, wait, immediate) {
@@ -271,7 +271,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').provider('calendarConfig', function () {
+    angular.module('reflect.calendar').provider('calendarConfig', function () {
         var defaultDateFormats = {
             hour: 'ha',
             day: 'D MMM',
@@ -310,7 +310,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').filter('calendarTruncateEventTitle', function () {
+    angular.module('reflect.calendar').filter('calendarTruncateEventTitle', function () {
         return function (string, length, boxHeight) {
             if (!string) {
                 return '';
@@ -324,7 +324,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').filter('calendarLimitTo', function () {
+    angular.module('reflect.calendar').filter('calendarLimitTo', function () {
         //Copied from the angular source. Only 1.4 has the begin functionality.
         return function (input, limit, begin) {
             if (Math.abs(Number(limit)) === Infinity) {
@@ -353,7 +353,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlDateModifier', function () {
+    angular.module('reflect.calendar').directive('mwlDateModifier', function () {
         return {
             restrict: 'A',
             controller: [
@@ -386,7 +386,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCollapseFallback', [
+    angular.module('reflect.calendar').directive('mwlCollapseFallback', [
         '$injector',
         function ($injector) {
             if ($injector.has('collapseDirective')) {
@@ -416,7 +416,7 @@
         }
     ]);
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarYear', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarYear', function () {
         return {
             templateUrl: 'src/templates/calendarYearView.html',
             restrict: 'EA',
@@ -474,7 +474,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarWeek', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarWeek', function () {
         return {
             templateUrl: 'src/templates/calendarWeekView.html',
             restrict: 'EA',
@@ -501,7 +501,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarSlideBox', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarSlideBox', function () {
         return {
             restrict: 'EA',
             templateUrl: 'src/templates/calendarSlideBox.html',
@@ -542,7 +542,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarMonth', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarMonth', function () {
         return {
             templateUrl: 'src/templates/calendarMonthView.html',
             restrict: 'EA',
@@ -617,7 +617,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendarDay', function () {
+    angular.module('reflect.calendar').directive('mwlCalendarDay', function () {
         return {
             templateUrl: 'src/templates/calendarDayView.html',
             restrict: 'EA',
@@ -667,7 +667,7 @@
         };
     });
     'use strict';
-    angular.module('mwl.calendar').directive('mwlCalendar', function () {
+    angular.module('reflect.calendar').directive('mwlCalendar', function () {
         return {
             templateUrl: 'src/templates/calendar.html',
             restrict: 'EA',

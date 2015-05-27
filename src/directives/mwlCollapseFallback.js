@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('mwl.calendar')
+  .module('reflect.calendar')
   .directive('mwlCollapseFallback', function($injector) {
 
     if ($injector.has('collapseDirective')) {

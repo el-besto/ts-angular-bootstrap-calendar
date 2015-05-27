@@ -75,7 +75,7 @@ function getTemplates() {
     }))
     .pipe($.angularTemplatecache({
       standalone: false,
-      module: 'mwl.calendar',
+      module: 'reflect.calendar',
       root: 'src/templates/'
     }));
 
